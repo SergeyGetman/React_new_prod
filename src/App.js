@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react"
+import Counters from "./components/Counters";
+import "./components/styles/App.css"
+import Postitem from "./components/Postitem";
 
 function App() {
+  const [likes, setLikes] = useState(5)
+  const [value, setValue] = useState("m da...")
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Counters/>
+      <br/>
+
+      <Postitem
+        post={{id: 1, title: "JavaScript", body: "Description"}}
+      /> <Postitem
+      post={{id: 5, title: "React", body: "Description"}}
+    /> <Postitem
+      post={{id: 2, title: "Mongo", body: "Description"}}
+    /> <Postitem
+      post={{id: 4, title: "JavaScript", body: "Description"}}
+    />
+
+
     </div>
   );
 }
