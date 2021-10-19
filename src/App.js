@@ -14,7 +14,7 @@ function App() {
       <br/>
 
       <Postitem
-        post={{id: 1, title: "JavaScript", body: "Description"}}
+        post={{id: 2, title: "JavaScript", body: "Description"}}
       /> <Postitem
       post={{id: 5, title: "React", body: "Description"}}
     /> <Postitem
