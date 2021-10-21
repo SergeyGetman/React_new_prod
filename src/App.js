@@ -4,6 +4,7 @@ import "./components/styles/App.css"
 
 import Postlist from "./components/Postlist";
 import MyButton from "./components/UI/button/MyButton";
+import MyInput from "./components/UI/input/MyInput";
 
 function App() {
   const [posts, setPost] = useState([
@@ -19,9 +20,11 @@ function App() {
   return (
     <div className="App">
       <form>
-        <input type="text" placeholder="Название поста"/>
-        <input type="text" placeholder="Описание поста"/>
-        <MyButton disabled>CREATE POST</MyButton>
+        <MyInput type="text" placeholder="Название поста"/>
+        <MyInput type="text" placeholder="Описание поста"/>
+
+
+        <MyButton >CREATE POST</MyButton>
 
       </form>
       
