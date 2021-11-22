@@ -8,6 +8,7 @@ import MyInput from "./components/UI/input/MyInput";
 import PostForm from "./components/PostForm";
 import MySelect from "./components/UI/select/MySelect";
 import Posfilter from "./components/Posfilter";
+import MyModal from "./components/UI/MyModal/MyModal";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   ])
 
 const [filter, setFilter] = useState({sort : "", query : ""})
+  const [modal, setModal ] = useState(false)
 
 
 
@@ -38,6 +40,7 @@ const [filter, setFilter] = useState({sort : "", query : ""})
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
+    setModal(false)
   }
 
   const removePost = (post) => {
@@ -48,14 +51,19 @@ const [filter, setFilter] = useState({sort : "", query : ""})
 
   return (
     <div className="App">
+      <MyButton onClick={() => setModal(true)} > Create Post</MyButton>
+      <MyModal
+        visible={modal}
+        setVisible={setModal}
+      >
+        {<PostForm create={createPost}/>}</MyModal>
       <hr style={{margin: "15px 0"}}/>
     <Posfilter filter={filter} setFilter={setFilter}/>
 
-      <PostForm create={createPost}/>
-      {sortedAndSearcedPost.length !== 0 ?
+
+
         <Postlist remove={removePost} posts={sortedAndSearcedPost}
                   title={"This My new React"}/>
-        : <h1 style={{textAlign: "center"}}> POST NOT FOUND</h1>
 
 
       }
