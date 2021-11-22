@@ -1,37 +1,35 @@
-import React, {useState} from "react"
-
+import React, {useState} from "react";
+import Counters from "./components/Counters";
 import "./components/styles/App.css"
-
+import Postitem from "./components/Postitem";
 import Postlist from "./components/Postlist";
 import MyButton from "./components/UI/button/MyButton";
 import MyInput from "./components/UI/input/MyInput";
+import PostForm from "./components/PostForm";
+
 
 function App() {
-  const [posts, setPost] = useState([
-    {id: 1, title: "JavaScript", body: "Description"},
-    {id: 2, title: "Java", body: "Description"},
-    {id: 3, title: "Script", body: "Description"},
+
+  const [posts, setPosts] = useState([
+    {id: 1, title: "JS", body: "description"},
+    {id: 2, title: "JS", body: "description"},
+    {id: 3, title: "JS", body: "description"}
   ])
 
-
-
-
+  const createPost = (newPost) => {
+    setPosts([...posts, newPost])
+  }
 
   return (
     <div className="App">
-      <form>
-        <MyInput type="text" placeholder="Название поста"/>
-        <MyInput type="text" placeholder="Описание поста"/>
 
+      <PostForm create={createPost}/>
+      <Postlist posts={posts} title={"This My new React"}/>
 
-        <MyButton >CREATE POST</MyButton>
-
-      </form>
-      
-      <Postlist posts={posts} title={"Посты про JS "}/>
-
+      <Counters/>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
+
