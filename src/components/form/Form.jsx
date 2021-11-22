@@ -2,7 +2,7 @@ import React from "react";
 
 
 export default function Form(props) {
-  console.log(props)
+
   const {values, handleChange, handleSubmit, elements} = props
 
   return (
