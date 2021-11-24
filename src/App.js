@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import axios from "axios";
 import Counters from "./components/Counters";
 import "./components/styles/App.css"
@@ -11,6 +11,8 @@ import MySelect from "./components/UI/select/MySelect";
 import Posfilter from "./components/Posfilter";
 import MyModal from "./components/UI/MyModal/MyModal";
 import {usePosts} from "./hooks/usePosts";
+import PostService from "./API/Post.Service";
+import Loader from "./components/UI/Loader/Loader";
 
 
 function App() {
@@ -24,7 +26,11 @@ function App() {
   const [filter, setFilter] = useState({sort: "", query: ""})
   const [modal, setModal] = useState(false)
   const sortedAndSearcedPost = usePosts(posts, filter.sort, filter.query)
+  const [isPostsLoading, setIsPostsLoading] = useState(false)
 
+  useEffect(() => {
+    fetchPosts()
+  }, [])
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
@@ -32,8 +38,10 @@ function App() {
   }
 
   async function fetchPosts() {
-    const response = await axios.get("https://jsonplaceholder.typicode.com/posts")
-    setPosts(response.data)
+    setIsPostsLoading(true)
+    const posts = await PostService.getAll()
+    setPosts(posts)
+    setIsPostsLoading(false)
   }
 
   const removePost = (post) => {
@@ -53,9 +61,11 @@ function App() {
       <hr style={{margin: "15px 0"}}/>
       <Posfilter filter={filter} setFilter={setFilter}/>
 
+      {isPostsLoading ? <div style={{display : "flex", justifyContent : "center"}}><Loader /></div>:
+        <Postlist remove={removePost} posts={sortedAndSearcedPost}
+                  title={"Can you try create post ?"}/>
+      }
 
-      <Postlist remove={removePost} posts={sortedAndSearcedPost}
-                title={"Can you try create post ?"}/>
 
       }
       <Counters/>
