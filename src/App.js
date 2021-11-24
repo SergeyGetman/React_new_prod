@@ -63,7 +63,7 @@ const [filter, setFilter] = useState({sort : "", query : ""})
 
 
         <Postlist remove={removePost} posts={sortedAndSearcedPost}
-                  title={"This My new React"}/>
+                  title={"Can you try create post ?"}/>
 
 
       }
