@@ -25,8 +25,7 @@ const PostForm = ({create}) => {
           placeholder="название поста"
           value={post.title}
         />
-        {/*неуправляемый ком-т*/}
-
+        {/*неуправляемый компонент*/}
         <MyInput
           type="text"
           value={post.body}

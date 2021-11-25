@@ -13,35 +13,30 @@ import MyModal from "./components/UI/MyModal/MyModal";
 import {usePosts} from "./hooks/usePosts";
 import PostService from "./API/Post.Service";
 import Loader from "./components/UI/Loader/Loader";
+import {useFetching} from "./hooks/useFetching";
 
 
 function App() {
 
-  const [posts, setPosts] = useState([
-    {id: 1, title: "FartRooN", body: "asd"},
-    {id: 2, title: "JS", body: "123"},
-    {id: 3, title: "Ruby", body: "c"}
-  ])
-
+  const [posts, setPosts] = useState([])
   const [filter, setFilter] = useState({sort: "", query: ""})
   const [modal, setModal] = useState(false)
   const sortedAndSearcedPost = usePosts(posts, filter.sort, filter.query)
-  const [isPostsLoading, setIsPostsLoading] = useState(false)
+  const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
+    const posts = await PostService.getAll()
+    setPosts(posts)
+
+  })
 
   useEffect(() => {
-    fetchPosts()
+    fetchPosts().then((response) => {
+      console.log(response)
+    })
   }, [])
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
     setModal(false)
-  }
-
-  async function fetchPosts() {
-    setIsPostsLoading(true)
-    const posts = await PostService.getAll()
-    setPosts(posts)
-    setIsPostsLoading(false)
   }
 
   const removePost = (post) => {
@@ -60,8 +55,10 @@ function App() {
         {<PostForm create={createPost}/>}</MyModal>
       <hr style={{margin: "15px 0"}}/>
       <Posfilter filter={filter} setFilter={setFilter}/>
-
-      {isPostsLoading ? <div style={{display : "flex", justifyContent : "center"}}><Loader /></div>:
+      {postError && <h1>произошла ошибка {postError}</h1>}
+      {isPostsLoading ?
+        <div style={{display: "flex", justifyContent: "center"}}><Loader/>
+        </div> :
         <Postlist remove={removePost} posts={sortedAndSearcedPost}
                   title={"Can you try create post ?"}/>
       }
